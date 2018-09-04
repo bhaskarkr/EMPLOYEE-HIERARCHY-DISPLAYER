@@ -1,0 +1,39 @@
+<html>
+	<header>
+		<title>LIST</title>
+		<script>
+			var iterator=0;//iterator for the list of employees
+			var down={{down|tojson|safe}};//converted to json value for iteartion
+			var gg = {{gg|tojson|safe}}//converted to json value for iteartion
+			function adder(index)//index = index of the current employee
+			{
+				var X=down[index];//count of the emptyoyees under current employee
+				var result_element="<li>";//to list emplyee details unmder unordered list
+				var k = gg[index];//k = deatils about the current employee
+				for(var j=0;j<2;j++)//displaying only name and designation
+					result_element+=k[j]+" ";//appending the name and designation to the text to display in each <li> tag
+				result_element+="</li>";
+				for(var i = 0;i<parseInt(X);i++)//if employees are there under current employee then start the new unordered list
+				{	
+					result_element+="<ul>";
+					iterator++;//recursive function appended the employee in "dfs" [depth first search] order		
+					result_element+=adder(iterator);//append the returned text from the adder function
+					result_element+="</ul>"
+				}
+				return result_element;//return the generated tag with there content
+			}
+			function disp()
+			{
+				var result_element="<ul>";//to make unordered list
+				result_element+=adder(0);//recursive function to generate the list
+				result_element+="</ul>";
+				document.getElementById('output').innerHTML = result_element;//to put the generated list items in the "p" element in the body 
+			}
+		</script>
+	</header>
+<body onload="disp()"><!-- onload loads the given function at the time page is loaded --> 
+	<div>
+		<p id="output"></p><!-- id = "output" is used by the script to put the genereted tags and contents in this paragraph tag -->
+	</div>
+</body>
+</html>
